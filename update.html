@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Animasi Nembak Cewek Lucu</title>
+  <style>
+    body {
+      background: #ffe6f0;
+      font-family: 'Comic Sans MS', cursive;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .scene {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .boy, .girl {
+      position: absolute;
+      bottom: 0;
+      width: 100px;
+      height: 150px;
+      background-size: cover;
+    }
+
+    .boy {
+      left: -120px;
+      background-image: url('https://i.imgur.com/rfRJff3.png');
+      animation: moveBoy 5s forwards;
+    }
+
+    .girl {
+      right: 100px;
+      background-image: url('https://i.imgur.com/1dq5sRI.png');
+    }
+
+    @keyframes moveBoy {
+      to {
+        left: 200px;
+      }
+    }
+
+    .dialog {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff0f5;
+      border: 3px dashed hotpink;
+      padding: 25px;
+      border-radius: 20px;
+      display: none;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+      box-shadow: 0 0 15px hotpink;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    .btn-yes, .btn-no {
+      margin: 10px;
+      padding: 12px 25px;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 12px;
+      transition: all 0.3s;
+    }
+
+    .btn-yes {
+      background-color: #ff69b4;
+      color: white;
+    }
+
+    .btn-no {
+      background-color: #ccc;
+      color: #333;
+    }
+
+    .btn-yes:hover {
+      background-color: #ff1493;
+    }
+
+    .btn-no:hover {
+      background-color: #aaa;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    /* Hati terbang */
+    .heart {
+      position: absolute;
+      color: red;
+      animation: flyUp 3s ease-out forwards;
+    }
+
+    @keyframes flyUp {
+      to {
+        transform: translateY(-120vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    /* Efek hujan */
+    .rain {
+      position: absolute;
+      width: 2px;
+      height: 15px;
+      background: #00f;
+      animation: drop 1s linear infinite;
+      opacity: 0.5;
+    }
+
+    @keyframes drop {
+      0% {
+        transform: translateY(-20px);
+      }
+      100% {
+        transform: translateY(100vh);
+      }
+    }
+  </style>
+</head>
+<body>
+  <audio id="bgm" autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+  </audio>
+
+  <div class="scene">
+    <div class="boy"></div>
+    <div class="girl"></div>
+    <div class="dialog" id="dialog">
+      <p>Halo lita, gw pengen kenal lu lebih jauh dari yg gw pikirkan maka dari itu<br>Bolehkah gw jadi cowok lu?</p>
+      <button class="btn-yes" onclick="jawab(true)">Iyaa 😍</button>
+      <button class="btn-no" onclick="jawab(false)">Temenan aja 😅</button>
+      <div class="result" id="result"></div>
+    </div>
+    <div id="hearts"></div>
+    <div id="rain"></div>
+  </div>
+
+  <script>
+    // Tampilkan dialog setelah animasi jalan selesai
+    setTimeout(() => {
+      document.getElementById("dialog").style.display = "block";
+    }, 5200);
+
+    function jawab(diterima) {
+      const res = document.getElementById("result");
+      const hearts = document.getElementById("hearts");
+      const rain = document.getElementById("rain");
+
+      if (diterima) {
+        res.innerHTML = "Yuhu Jadi cowoknya Lita ";
+        // Buat efek hati terbang
+        for (let i = 0; i < 30; i++) {
+          const heart = document.createElement("div");
+          heart.className = "heart";
+          heart.style.left = Math.random() * 100 + "vw";
+          heart.style.top = "90vh";
+          heart.style.fontSize = Math.random() * 30 + 20 + "px";
+          heart.innerHTML = "❤️";
+          hearts.appendChild(heart);
+          setTimeout(() => heart.remove(), 3000);
+        }
+      } else {
+        res.innerHTML = "Gapapa, masih bisa temenan kok 😅";
+        // Buat efek hujan sedih
+        for (let i = 0; i < 50; i++) {
+          const drop = document.createElement("div");
+          drop.className = "rain";
+          drop.style.left = Math.random() * 100 + "vw";
+          drop.style.animationDuration = (Math.random() + 0.5) + "s";
+          rain.appendChild(drop);
+          setTimeout(() => drop.remove(), 1500);
+        }
+      }
+    }
+  </script>
+</body>
+</html>
